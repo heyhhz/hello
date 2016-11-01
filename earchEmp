@@ -1,0 +1,309 @@
+[1mdiff --git a/WebContent/WEB-INF/jsp/emp/add.jsp b/WebContent/WEB-INF/jsp/emp/add.jsp[m
+[1mindex fee6b4d..15f986b 100644[m
+[1m--- a/WebContent/WEB-INF/jsp/emp/add.jsp[m
+[1m+++ b/WebContent/WEB-INF/jsp/emp/add.jsp[m
+[36m@@ -1,5 +1,6 @@[m
+ <%@ page language="java" contentType="text/html; charset=UTF-8"[m
+     pageEncoding="UTF-8"%>[m
+[32m+[m[32m    <%@ taglib uri="/struts-tags" prefix="s" %>[m[41m[m
+ <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">[m
+ <html>[m
+ <head>[m
+[36m@@ -7,6 +8,15 @@[m
+ <title>Insert title here</title>[m
+ </head>[m
+ <body>[m
+[31m-添加成功;[m
+[32m+[m[32m<s:debug></s:debug>[m[41m[m
+[32m+[m[32m<s:form action="empAdd.action">[m[41m[m
+[32m+[m	[32m<s:textfield label="姓名" name="emp.name"></s:textfield>[m[41m[m
+[32m+[m	[32m<s:textfield label="工资" name="emp.sal"></s:textfield>[m[41m[m
+[32m+[m	[32m<s:select label="职位" list="#session.jobs" name="emp.job"></s:select>[m[41m[m
+[32m+[m	[32m<s:submit value="添加"></s:submit>[m[41m[m
+[32m+[m[32m</s:form>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m[m
+[32m+[m[41m	[m
+ </body>[m
+ </html>[m
+\ No newline at end of file[m
+[1mdiff --git a/WebContent/WEB-INF/jsp/emp/listAll.jsp b/WebContent/WEB-INF/jsp/emp/listAll.jsp[m
+[1mindex 6278948..499051d 100644[m
+[1m--- a/WebContent/WEB-INF/jsp/emp/listAll.jsp[m
+[1m+++ b/WebContent/WEB-INF/jsp/emp/listAll.jsp[m
+[36m@@ -5,36 +5,82 @@[m
+ <head>[m
+ <meta charset="UTF-8">[m
+ <title>显示所有员工信息</title>[m
+[32m+[m[32m<script src="${pageContext.request.contextPath }/js/jquery-1.7.2.js"></script>[m[41m[m
+ </head>[m
+ <body>[m
+ [m
+[31m-[m
+ <s:debug></s:debug>[m
+ [m
+[32m+[m[32m<s:textfield id="sname" />[m[41m[m
+[32m+[m[32m<input type="button" id="search" value="搜索"/>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<a href="add.action">添加员工</a>[m[41m[m
+ [m
+[31m-<table>[m
+[32m+[m[32m<table id="dialog">[m[41m[m
+ 	<tr>[m
+ 		<td>姓名</td>[m
+ 		<td>工作</td>[m
+ 		<td>工资</td>[m
+ 	</tr>[m
+ 	[m
+[31m-	<s:iterator var="j" value="emps.{? #this.sal > 1000 }">[m
+[31m-		<tr>[m
+[31m-			<td>${name}</td>[m
+[31m-			<td><s:property value="job"/></td>[m
+[31m-			<td><s:property value="#j.sal"/></td>[m
+[31m-			<td>[m
+[32m+[m		[32m<s:iterator var="j" value="emps.{? #this.sal > 1000 }">[m[41m[m
+[32m+[m			[32m<tr>[m[41m[m
+[32m+[m				[32m<td>${name}</td>[m[41m[m
+[32m+[m				[32m<td><s:property value="job"/></td>[m[41m[m
+[32m+[m				[32m<td><s:property value="#j.sal"/></td>[m[41m[m
+[32m+[m[41m			 	[m
+ 				<s:if test="#session.account.acctype == 2 || #session.account.acctype == 3">[m
+[31m-					<a href="delete.html?ename=${name}">删除</a>[m
+[32m+[m					[32m<td>[m[41m[m
+[32m+[m						[32m<a href="delete.html?ename=${name}">删除</a>[m[41m[m
+[32m+[m					[32m</td>[m[41m[m
+ 				</s:if>[m
+[32m+[m[41m					[m
+[32m+[m[41m					[m
+[32m+[m			[32m</tr>[m[41m[m
+[32m+[m		[32m</s:iterator>[m[41m[m
+[32m+[m	[32m</tboby>[m[41m[m
+[32m+[m[41m	[m
+[32m+[m[32m</table>[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m<script type="text/javascript">[m[41m[m
+[32m+[m	[32m$("#search").on("click",function(){[m[41m[m
+[32m+[m		[32mvar ename=$("#sname").val();[m[41m[m
+[32m+[m[41m		[m
+[32m+[m		[32m$.ajax({[m[41m[m
+[32m+[m			[32murl:'searchEmp.html',[m[41m[m
+[32m+[m			[32mtype:'post',[m[41m[m
+[32m+[m			[32mdata:{'emp.name':ename},[m[41m[m
+[32m+[m			[32msuccess:function(data){[m[41m[m
+[32m+[m				[32mvar html = "";[m[41m[m
+[32m+[m				[32mhtml += "<tr>";[m[41m[m
+ 				[m
+[31m-			</td>	[m
+[31m-		</tr>[m
+[31m-	</s:iterator>[m
+[32m+[m				[32mhtml += "<td>姓名</td>";[m[41m[m
+[32m+[m				[32mhtml += "<td>工作</td>";[m[41m[m
+[32m+[m				[32mhtml += "<td>工资</td>";[m[41m[m
+[32m+[m				[32mhtml += "</tr>";[m[41m[m
+[32m+[m[41m				[m
+[32m+[m				[32mfor(var i in data){[m[41m[m
+ 	[m
+[32m+[m[41m [m				[32mhtml += "<tr>";[m[41m[m
+[32m+[m[41m [m				[32mhtml += " <td>"+data[i].name+"</td>";[m[41m[m
+[32m+[m[41m [m				[32mhtml += " <td>"+data[i].job+"</td>";[m[41m[m
+[32m+[m[41m [m				[32mhtml += " <td>"+data[i].sal+"</td>";[m[41m[m
+[32m+[m[41m [m				[32m<s:if test="#session.account.acctype == 2 || #session.account.acctype == 3">[m[41m[m
+[32m+[m[41m [m					[32mhtml += "<td><a href='delete.html?ename="+data[i].name+"'>删除</a></td>"[m[41m[m
+[32m+[m				[32m</s:if>[m[41m[m
+[32m+[m[41m [m				[32mhtml+="</tr>";[m[41m[m
+[32m+[m				[32m}[m[41m[m
+[32m+[m[41m				[m
+[32m+[m				[32m$("#dialog").html(html);[m[41m[m
+[32m+[m[41m				[m
+[32m+[m			[32m},[m[41m[m
+[32m+[m			[32merror:function(){[m[41m[m
+[32m+[m				[32malert(发送失败);[m[41m[m
+[32m+[m			[32m}[m[41m[m
+[32m+[m		[32m});[m[41m[m
+[32m+[m	[32m});[m[41m[m
+ 	[m
+[31m-</table>[m
+[32m+[m[32m</script>[m[41m[m
+ [m
+ </body>[m
+ </html>[m
+\ No newline at end of file[m
+[1mdiff --git a/main/s126/hello/action/EmpAction.java b/main/s126/hello/action/EmpAction.java[m
+[1mindex e7d93b8..f6acd45 100644[m
+[1m--- a/main/s126/hello/action/EmpAction.java[m
+[1m+++ b/main/s126/hello/action/EmpAction.java[m
+[36m@@ -1,18 +1,21 @@[m
+ package s126.hello.action;[m
+ [m
+[32m+[m[32mimport java.io.InputStream;[m[41m[m
+ import java.util.ArrayList;[m
+ import java.util.List;[m
+ [m
+ import s126.hello.bean.Emp;[m
+ import s126.hello.dao.EmpDao;[m
+ [m
+[32m+[m[32mimport com.opensymphony.xwork2.ActionContext;[m[41m[m
+ import com.opensymphony.xwork2.ActionSupport;[m
+ [m
+ public class EmpAction extends ActionSupport {[m
+[31m-	[m
+[32m+[m	[32mprivate InputStream inputStream;[m[41m[m
+ 	private String ename;[m
+ 	private List<Emp> emps = new ArrayList<Emp>();[m
+[31m-	[m
+[32m+[m	[32mprivate Emp emp;[m[41m[m
+[32m+[m	[32mprivate String msg;[m[41m[m
+ 	EmpDao empDao = new EmpDao();[m
+ 	[m
+ 	/* 显示所有员工 */[m
+[36m@@ -34,6 +37,7 @@[m [mpublic class EmpAction extends ActionSupport {[m
+ 	/* 增加员工 */[m
+ 	public String add(){[m
+ 		System.out.println("增加员工");[m
+[32m+[m		[32mActionContext.getContext().getSession().put("jobs", empDao.getJob());[m[41m[m
+ 		return "add";[m
+ 	}[m
+ 	[m
+[36m@@ -43,8 +47,28 @@[m [mpublic class EmpAction extends ActionSupport {[m
+ 		return "update";[m
+ 	}[m
+ 	[m
+[32m+[m	[32mpublic String empAdd () {[m[41m[m
+[32m+[m		[32mboolean bl = false;[m[41m[m
+[32m+[m		[32mbl = empDao.empAdd(emp);[m[41m[m
+[32m+[m		[32mif(bl){[m[41m[m
+[32m+[m			[32mmsg = "添加成功";[m[41m[m
+[32m+[m			[32mreturn listAll ();[m[41m[m
+[32m+[m		[32m}else{[m[41m[m
+[32m+[m			[32mmsg = "添加失败";[m[41m[m
+[32m+[m			[32mreturn add();[m[41m[m
+[32m+[m		[32m}[m[41m[m
+[32m+[m	[32m}[m[41m[m
+[32m+[m[41m	[m
+[32m+[m	[32m/*显示页面搜索功能*/[m[41m[m
+[32m+[m	[32mpublic String search() {[m[41m[m
+[32m+[m		[32memps=new EmpDao().getSome(emp);[m[41m[m
+[32m+[m		[32m//String g = new Gson().toJson(emps);[m[41m[m
+[32m+[m[41m		[m
+[32m+[m[41m		[m
+[32m+[m		[32mreturn SUCCESS;[m[41m[m
+[32m+[m	[32m}[m[41m[m
+ [m
+[31m-[m
+[32m+[m[41m	[m
+ 	public String getEname() {[m
+ 		return ename;[m
+ 	}[m
+[36m@@ -60,4 +84,20 @@[m [mpublic class EmpAction extends ActionSupport {[m
+ 		this.emps = emps;[m
+ 	}[m
+ [m
+[32m+[m	[32mpublic Emp getEmp() {[m[41m[m
+[32m+[m		[32mreturn emp;[m[41m[m
+[32m+[m	[32m}[m[41m[m
+[32m+[m[41m[m
+[32m+[m	[32mpublic void setEmp(Emp emp) {[m[41m[m
+[32m+[m		[32mthis.emp = emp;[m[41m[m
+[32m+[m	[32m}[m[41m[m
+[32m+[m[41m[m
+[32m+[m	[32mpublic String getMsg() {[m[41m[m
+[32m+[m		[32mreturn msg;[m[41m[m
+[32m+[m	[32m}[m[41m[m
+[32m+[m[41m[m
+[32m+[m	[32mpublic void setMsg(String msg) {[m[41m[m
+[32m+[m		[32mthis.msg = msg;[m[41m[m
+[32m+[m	[32m}[m[41m[m
+[32m+[m[41m[m
+ }[m
+[1mdiff --git a/main/s126/hello/dao/EmpDao.java b/main/s126/hello/dao/EmpDao.java[m
+[1mindex 24d65ed..0bafbe6 100644[m
+[1m--- a/main/s126/hello/dao/EmpDao.java[m
+[1m+++ b/main/s126/hello/dao/EmpDao.java[m
+[36m@@ -62,5 +62,60 @@[m [mpublic class EmpDao {[m
+ [m
+ 	}[m
+ [m
+[32m+[m	[32mpublic boolean empAdd (Emp emp) {[m[41m[m
+[32m+[m		[32mboolean bl = false;[m[41m[m
+[32m+[m		[32mString sql = "insert into emp (ename,job,sal) values (?, ?, ?)";[m[41m[m
+[32m+[m		[32mint row = 0 ;[m[41m[m
+[32m+[m		[32mtry {[m[41m[m
+[32m+[m			[32mconn = DBUtil.getConn();[m[41m[m
+[32m+[m			[32mps = conn.prepareStatement(sql);[m[41m[m
+[32m+[m			[32mps.setString(1, emp.getName());[m[41m[m
+[32m+[m			[32mps.setString(2, emp.getJob());[m[41m[m
+[32m+[m			[32mps.setInt(3, emp.getSal());[m[41m[m
+[32m+[m			[32mrow = ps.executeUpdate();[m[41m[m
+[32m+[m		[32m} catch (Exception e) {[m[41m[m
+[32m+[m			[32m// TODO: handle exception[m[41m[m
+[32m+[m		[32m}[m[41m[m
+[32m+[m		[32mreturn bl = row > 0;[m[41m[m
+[32m+[m	[32m}[m[41m[m
+ [m
+[32m+[m[41m	[m
+[32m+[m	[32mpublic List<String> getJob () {[m[41m[m
+[32m+[m		[32mList<String> list = new ArrayList<String>();[m[41m[m
+[32m+[m		[32mString sql = "select distinct job from emp";[m[41m[m
+[32m+[m		[32mtry {[m[41m[m
+[32m+[m			[32mconn = DBUtil.getConn();[m[41m[m
+[32m+[m			[32mps = conn.prepareStatement(sql);[m[41m[m
+[32m+[m			[32mrs = ps.executeQuery();[m[41m[m
+[32m+[m			[32mwhile(rs.next()){[m[41m[m
+[32m+[m				[32mrs.getString(1);[m[41m[m
+[32m+[m				[32mlist.add(rs.getString(1));[m[41m[m
+[32m+[m			[32m}[m[41m[m
+[32m+[m		[32m} catch (Exception e) {[m[41m[m
+[32m+[m			[32m// TODO: handle exception[m[41m[m
+[32m+[m		[32m}[m[41m[m
+[32m+[m		[32mreturn list;[m[41m[m
+[32m+[m	[32m}[m[41m[m
+[32m+[m[41m	[m
+[32m+[m	[32mpublic List<Emp> getSome(Emp emp){[m[41m[m
+[32m+[m		[32mList<Emp> ls = new ArrayList<Emp>();[m[41m[m
+[32m+[m		[32mString sql = "select ename, job, sal from Emp where ename like ? or job like ?";[m[41m[m
+[32m+[m		[32mtry {[m[41m[m
+[32m+[m			[32mconn = DBUtil.getConn();[m[41m[m
+[32m+[m			[32mps = conn.prepareStatement(sql);[m[41m[m
+[32m+[m			[32mps.setString(1,"%"+ emp.getName()+"%");[m[41m[m
+[32m+[m			[32mps.setString(2,"%"+ emp.getName()+"%");[m[41m[m
+[32m+[m			[32mrs = ps.executeQuery();[m[41m[m
+[32m+[m			[32mwhile (rs.next()) {[m[41m[m
+[32m+[m				[32mEmp e = new Emp();[m[41m[m
+[32m+[m				[32me.setSal(rs.getInt("sal"));[m[41m[m
+[32m+[m				[32me.setName(rs.getString("ename"));[m[41m[m
+[32m+[m				[32me.setJob(rs.getString("job"));[m[41m[m
+[32m+[m				[32mls.add(e);[m[41m[m
+[32m+[m			[32m}[m[41m[m
+[32m+[m		[32m} catch (Exception e) {[m[41m[m
+[32m+[m			[32me.printStackTrace();[m[41m[m
+[32m+[m		[32m}[m[41m[m
+[32m+[m		[32mreturn ls;[m[41m[m
+[32m+[m	[32m}[m[41m[m
+ }[m
+[1mdiff --git a/resources/struts.xml b/resources/struts.xml[m
+[1mindex 189b26f..82f56fb 100644[m
+[1m--- a/resources/struts.xml[m
+[1m+++ b/resources/struts.xml[m
+[36m@@ -98,14 +98,22 @@[m
+ 		[m
+ 		<default-interceptor-ref name="privsStack"></default-interceptor-ref>[m
+ 		[m
+[32m+[m[41m		[m
+[32m+[m[41m		[m
+ 		<action name="*" class="s126.hello.action.EmpAction" method="{1}">[m
+ 			<result name="listAll">/WEB-INF/jsp/emp/listAll.jsp</result>[m
+ 			<result name="ierror" type="redirect">/login/login.html</result>[m
+ 			<result name="update">/WEB-INF/jsp/emp/update.jsp</result>[m
+ 			<result name="add">/WEB-INF/jsp/emp/add.jsp</result>[m
+ 			<result name="delete">/WEB-INF/jsp/emp/delete.jsp</result>[m
+[32m+[m			[32m<result name="input">/WEB-INF/jsp/emp/add.jsp</result>[m
+ 		</action>[m
+ 		[m
+[32m+[m		[32m<action name="searchEmp" class="s126.hello.action.EmpAction" method="search">[m
+[32m+[m			[32m<result type="json">[m
+[32m+[m[41m  [m				[32m<param name="root">emps</param>[m
+[32m+[m[41m  [m			[32m</result>[m
+[32m+[m		[32m</action>[m
+ 	</package>[m
+ [m
+ [m

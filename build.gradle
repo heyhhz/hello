@@ -1,0 +1,71 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+
+
+
+sourceCompatibility = 1.8
+webAppDirName = 'WebContent'
+sourceSets {
+  main.java.srcDirs "src"
+  main.resources.srcDirs "resources"
+}
+
+eclipse {
+  wtp.facet {
+    facet name: 'wst.jsdt.web', version: '1.0'
+    facet name: 'jst.web', version: '3.0'
+    facet name: 'jst.java', version: '1.8'
+  }
+  classpath.defaultOutputDir = file("$webAppDirName/WEB-INF/classes")
+}
+
+
+
+
+
+
+// config the repositories
+repositories {
+  jcenter()
+}
+
+// config the libaries
+dependencies {
+
+  def strutsVersion = "2.3.30"
+
+  testCompile (
+    "junit:junit:4.12"
+  )
+  
+  providedCompile (
+    "javax.servlet:javax.servlet-api:3.1.0",
+    "javax.servlet.jsp:javax.servlet.jsp-api:2.3.1"
+  )
+  
+  compile (
+    
+    // ojdbc
+    files ('E:/library/ojdbc7.jar'),
+
+    // basics
+    "javax.servlet:jstl:1.2",
+    "log4j:log4j:1.2.17",
+
+    // struts
+    "org.apache.struts:struts2-core:$strutsVersion",
+    "org.apache.struts:struts2-json-plugin:$strutsVersion"
+  )
+}
+
+
+
+// Copy the jars to WEB-INF/lib
+task copyJars(type: Copy) {
+  from configurations.compile, configurations.testCompile
+  into "$webAppDirName/WEB-INF/lib"
+}
+
+
