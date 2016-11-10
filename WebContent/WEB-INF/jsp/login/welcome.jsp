@@ -5,10 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/common.css"></link>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.min.css"></link>
+<script src="${pageContext.request.contextPath }/js/jquery-3.0.0.js"></script> 
 <title>欢迎页面</title>
 </head>
 <body>
-
+	<%@ include file="/WEB-INF/jsp/pages/header.jspf" %>
 	<s:debug />
 
 	<div style="width: 500px; margin: 0 auto; border: 1px solid #999; padding: 10px;">
@@ -36,6 +39,6 @@
 	</div>
 
 
-
+	<%@ include file="/WEB-INF/jsp/pages/footer.jspf" %>
 </body>
 </html>

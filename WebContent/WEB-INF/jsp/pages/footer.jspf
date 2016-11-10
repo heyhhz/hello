@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 
-<header>
 
-<div style="width: 100%; height: 100px; background: orange; border-bottom: 1px solid red; margin-bottom: 20px;">
-<h1 style="float: left;"><a href="<%= request.getContextPath() %>/index.htm">管理系统</a></h1>
-<div style="float:right;"><a href="#">注销</a></div>
-<div style="float:right;">欢迎您，某某老师。</div>
-</div>
 
-</header>
+<footer id="footer">
+	<div class="container">
+		<p>项目培训 | 合作事宜 | 版权投诉</p>
+		<p>粤ICP 备12345678. © 2016-2099 南方IT学院. Powered by S3SJ126.</p>
+	</div>
+</footer>
+

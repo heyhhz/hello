@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>商品列表</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/common.css"></link>
 <s:if test="#request.msg">
 <script>
 	alert('${request.msg}');
@@ -13,6 +15,7 @@
 </s:if>
 </head>
 <body>
+<%@ include file="/WEB-INF/jsp/pages/header.jspf" %>
 <div id="main" style="width: 400px;">
 	<header>
 		<h1 style="text-align: center">商品管理系统</h1>
@@ -45,8 +48,8 @@
 
 </div>
 
-
-<s:debug></s:debug>
+<%@ include file="/WEB-INF/jsp/pages/footer.jspf" %>
+<%-- <s:debug></s:debug> --%>
 
 
 

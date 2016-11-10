@@ -5,9 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>新增商品</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/common.css"></link>
 </head>
 <body>
-
+<%@ include file="/WEB-INF/jsp/pages/header.jspf" %>
 <div id="main">
 	<s:a href="list">返回</s:a>
 	<s:form action="add" namespace="/items">
@@ -18,6 +20,6 @@
 		<s:submit value="添加"></s:submit>
 	</s:form>
 </div>
-
+<%@ include file="/WEB-INF/jsp/pages/footer.jspf" %>
 </body>
 </html>

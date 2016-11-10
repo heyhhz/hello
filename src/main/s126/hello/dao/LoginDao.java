@@ -9,58 +9,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-
 import s126.hello.bean.Account;
 import s126.hello.util.DBUtil;
 
 
 public class LoginDao extends BaseDao {
 	
-	// 初始化加载配置对象
-	Configuration config = new Configuration().configure("hello.cfg.xml");
-	// 初始化服务
-	ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(config.getProperties()).build();
-	// 初始化 SessionFactory
-	SessionFactory sessionFactory = config.buildSessionFactory(serviceRegistry);
-	
-	
 	/**
 	 * 增加一个新的账号.
 	 */
 	public boolean addAccount(Account account) {
-		/*String sql = "insert into account (username, password, acctype, birthday, email, phone, sex) values (?, ?, ? , ? , ? , ?, ? )";
+		String sql = "insert into account (username, password, acctype, birthday, email, phone, sex) values (?, ?, ? , ? , ? , ?, ? )";
 		return execute(sql,
 				account.getUsername(), account.getPassword(),
 				account.getAcctype() == 0 ? 1 : account.getAcctype(),
 				new Date(account.getBirthday().getTime()),
-				account.getEmail(), account.getPhone(), account.getSex());*/
-		Transaction beginTransaction = null;
-		boolean bl = false; 
-		try {
-			
-			Session session = sessionFactory.openSession();
-			beginTransaction = session.beginTransaction();
-			
-			session.save(account);
-			
-			beginTransaction.commit();
-			session.close();
-			
-			bl = true;
-			
-		} catch (Exception e) {
-			beginTransaction.rollback();
-			bl = false;
-			e.printStackTrace();
-		} 
-		
-		return bl;
+				account.getEmail(), account.getPhone(), account.getSex());
 	}
 
 	
@@ -109,5 +73,4 @@ public class LoginDao extends BaseDao {
 	public boolean checkEname(String username) {
 		return query(Account.class, "select username from account where username = ?", username).size() > 0;
 	}
-	
 }

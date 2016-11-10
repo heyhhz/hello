@@ -77,4 +77,10 @@ public class Account {
 		this.sex = sex;
 	}
 
+	@Override
+	public String toString() {
+		return "Account [username=" + username + ", password=" + password + ", acctype=" + acctype + ", lastLogin="
+				+ lastLogin + ", birthday=" + birthday + ", email=" + email + ", phone=" + phone + ", sex=" + sex + "]";
+	}
+
 }

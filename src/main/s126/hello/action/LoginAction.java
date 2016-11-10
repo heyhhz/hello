@@ -34,10 +34,12 @@ public class LoginAction extends ActionSupport {
 	private List<String> reslist = new ArrayList<String>();
 
 	
-	public String logout() {
-		loginService.logout();
+	public String logout () {
+		LoginService.logout();
+		
 		return "index";
 	}
+	
 	
 	
 	/**

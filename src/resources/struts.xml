@@ -17,7 +17,7 @@
 
   
   <!-- 第一个模块，登陆注册 -->
-  <package name="default" namespace="/login" extends="json-default"  >
+  <package name="default" namespace="/login" extends="json-default">
 
     <global-results>
       <result name="error">/WEB-INF/jsp/login/error.jsp</result>
@@ -77,10 +77,9 @@
       </result>
     </action>
     
-    <!-- 注销 -->
-    <action name="logout" class="s126.hello.action.LoginAction" method="logout">
-    </action>
     
+    <action name="logout" class ="s126.hello.action.LoginAction" method="logout">
+    </action>
   </package>
 
 
@@ -121,7 +120,6 @@
       <result name="input">/WEB-INF/jsp/emp/addIndex.jsp</result>
     </action>
     <!-- 添加员工  -->
-    
   </package>
 
 

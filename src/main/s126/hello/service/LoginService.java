@@ -25,11 +25,9 @@ public class LoginService {
 		return loginDao.addAccount(account);
 	}
 
-	public void logout() {
+	public static void logout() {
 		ServletActionContext.getRequest().getSession().invalidate();
 	}
-	
-	
 }
 
 

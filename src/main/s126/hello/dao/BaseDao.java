@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import s126.hello.bean.Account;
 import s126.hello.util.DBUtil;
 
 public class BaseDao {
@@ -19,7 +20,7 @@ public class BaseDao {
 	private Connection conn = null;
 	private PreparedStatement ps = null;
 	private ResultSet rs = null;
-	
+
 	/**
 	 * 通用的查询方法
 	 * 
@@ -141,6 +142,15 @@ public class BaseDao {
 		}
 
 		return false;
+	}
+	
+	public static void main(String[] args) {
+		String sql = "select username, acctype, lastlogin from account where username=? and password=?";
+		List<Account> accs = new BaseDao().query(Account.class, sql, "aaaaa", "aaaaa");
+		for (Account account : accs) {
+			System.out.println(account);
+		}
+		
 	}
 
 }

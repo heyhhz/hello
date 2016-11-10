@@ -6,6 +6,7 @@
 <title>首页</title>
 </head>
 <body>
+	<%@ include file="/WEB-INF/jsp/pages/header.jspf" %>
 	您是学生，没有权限。
 </body>
 </html>

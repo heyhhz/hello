@@ -25,14 +25,12 @@ public class DBUtil {
 
 			// 从 db.properties 加载配置文件
 			Properties prop = new Properties();
-			InputStream in = DBUtil.class.getClassLoader().getResourceAsStream(
-					"db.properties");
+			InputStream in = DBUtil.class.getClassLoader().getResourceAsStream("db.properties");
 			prop.load(in);
 			driver = prop.getProperty("driver");
 			url = prop.getProperty("url");
 			user = prop.getProperty("user");
 			password = prop.getProperty("password");
-
 			Class.forName(driver);
 
 		} catch (ClassNotFoundException e) {
@@ -70,4 +68,5 @@ public class DBUtil {
 			e.printStackTrace();
 		}
 	}
+	
 }

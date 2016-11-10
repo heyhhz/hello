@@ -30,16 +30,11 @@ public class PrivsInterceptor extends AbstractInterceptor {
 		if (namespace.equalsIgnoreCase("/emp")) {
 			
 			// 没有权限，返回相关页面，比如登录页面。仅是一个示例。
-			if(acctype != 2 && (method.equalsIgnoreCase("delete") || method.equalsIgnoreCase("update"))) {
+			if(!(acctype == 2 || acctype == 3) && (method.equalsIgnoreCase("delete") || method.equalsIgnoreCase("update"))) {
 				session.invalidate();
-				return "index";
+				System.out.println("error");
 			}
-			
-		} else if (namespace.equalsIgnoreCase("/items")) {
-			// my judge
 		}
-		
-		
 		return invocation.invoke();
 	}
 

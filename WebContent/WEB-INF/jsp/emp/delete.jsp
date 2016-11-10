@@ -5,8 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/common.css"></link>
 </head>
 <body>
-删除成功！！！！
+<%@ include file="/WEB-INF/jsp/pages/header.jspf" %>
+	删除成功！！！！
 </body>
 </html>
